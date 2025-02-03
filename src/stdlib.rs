@@ -35,10 +35,10 @@ static ERLANG_FUNCTIONS: OnceLock<
          CallLocality,
          TypeApproximation,
          Vec<TypeApproximation>,)] {
-     let alias_opts = || List(Box::new(Union(vec![
-         SpecificAtom("explicit_unalias".to_string()),
-         SpecificAtom("reply".to_string()),
-     ])));
+     // let alias_opts = || List(Box::new(Union(vec![
+     //     SpecificAtom("explicit_unalias".to_string()),
+     //     SpecificAtom("reply".to_string()),
+     // ])));
      let encoding_type = || Union(vec![SpecificAtom("latin1".to_string()), SpecificAtom("unicode".to_string()), SpecificAtom("utf8".to_string())]);
      // let binary_to_term_opts = || List(Box::new(Union(vec![SpecificAtom("safe".to_string()), SpecificAtom("used".to_string())])));
      let true_type = || SpecificAtom("true".to_string());
@@ -51,14 +51,14 @@ static ERLANG_FUNCTIONS: OnceLock<
      //     SpecificAtom("native".to_string()),
      //     SpecificAtom("perf_counter".to_string()),
      // ]);
-     let delete_module_return = || Union(vec![SpecificAtom("undefined".to_string()), SpecificAtom("true".to_string())]);
-     // let external_size_opts = || List(Box::new(Union(vec![
-     //     SpecificAtom("compressed".to_string()),
-     //     SpecificAtom("deterministic".to_string()),
-     //     SpecificAtom("local".to_string()),
-     //     // {compressed, Level :: 0..9}
-     //     // {minor_version, Version :: 0..2}
-     // ])));
+     // let delete_module_return = || Union(vec![SpecificAtom("undefined".to_string()), SpecificAtom("true".to_string())]);
+     // // let external_size_opts = || List(Box::new(Union(vec![
+     // //     SpecificAtom("compressed".to_string()),
+     // //     SpecificAtom("deterministic".to_string()),
+     // //     SpecificAtom("local".to_string()),
+     // //     // {compressed, Level :: 0..9}
+     // //     // {minor_version, Version :: 0..2}
+     // // ])));
      let float_printing_opts = || List(Box::new(Union(vec![
          SpecificAtom("compact".to_string()),
          SpecificAtom("short".to_string()),
@@ -135,11 +135,11 @@ static ERLANG_FUNCTIONS: OnceLock<
      ERLANG_FUNCTIONS.get_or_init(|| vec![
      ("abs", DeterministicOnly, InGuard, Local, Float, vec![Float]),
      ("abs", DeterministicOnly, InGuard, Local, Integer, vec![Integer]),
-     ("adler32", DeterministicOnly, NotInGuard, Remote, Integer, vec![List(Box::new(Any))]), // actually iodata
-     ("adler32", DeterministicOnly, NotInGuard, Remote, Integer, vec![Integer, List(Box::new(Any))]), // List(Box::new(Any)) is actually iodata
-     ("adler32_combine", DeterministicOnly, NotInGuard, Remote, Integer, vec![Integer, Integer, Integer]),
-     ("alias", AnyDeterminism, NotInGuard, Local, Ref, vec![]),
-     ("alias", AnyDeterminism, NotInGuard, Local, Ref, vec![alias_opts()]),
+     // ("adler32", DeterministicOnly, NotInGuard, Remote, Integer, vec![List(Box::new(Any))]), // actually iodata
+     // ("adler32", DeterministicOnly, NotInGuard, Remote, Integer, vec![Integer, List(Box::new(Any))]), // List(Box::new(Any)) is actually iodata
+     // ("adler32_combine", DeterministicOnly, NotInGuard, Remote, Integer, vec![Integer, Integer, Integer]),
+     // ("alias", AnyDeterminism, NotInGuard, Local, Ref, vec![]),
+     // ("alias", AnyDeterminism, NotInGuard, Local, Ref, vec![alias_opts()]),
      // TODO: better type for append_element
      // ("append_element", DeterministicOnly, NotInGuard, Remote, AnyTuple, vec![AnyTuple, Any]),
      ("apply", DeterministicOnly, NotInGuard, Local, Any, vec![Fun, Any]),
@@ -169,11 +169,11 @@ static ERLANG_FUNCTIONS: OnceLock<
      // check_old_code, check_process_code
      // ("convert_time_unit", DeterministicOnly, NotInGuard, Remote, Integer, vec![Integer, time_unit(), time_unit()]),
      // crc32, crc32_combine
-     ("date", AnyDeterminism, NotInGuard, Local, Tuple(vec![Integer, Integer, Integer]), vec![]),
+     // ("date", AnyDeterminism, NotInGuard, Local, Tuple(vec![Integer, Integer, Integer]), vec![]),
      // decode_packet: ridiculously complex, would need a dedicated fuzzer !
      // TODO: better type for delete_element, element
      ("delete_element", DeterministicOnly, NotInGuard, Remote, AnyTuple, vec![AnyTuple, Integer]),
-     ("delete_module", DeterministicOnly, NotInGuard, Local, delete_module_return(), vec![Atom]),
+     // ("delete_module", DeterministicOnly, NotInGuard, Local, delete_module_return(), vec![Atom]),
      // demonitor, disconnect_node, display_term, dist_ctrl_..., 
      ("element", DeterministicOnly, InGuard, Local, Any, vec![AnyTuple, Integer]),
      // ("erase", AnyDeterminism, NotInGuard, Local, List(Box::new(Tuple(vec![Any, Any]))), vec![]),
@@ -251,14 +251,14 @@ static ERLANG_FUNCTIONS: OnceLock<
      ("map_size", DeterministicOnly, InGuard, Local, Integer, vec![Map]),
      // match_spec_test
      ("max", DeterministicOnly, InGuard, Local, Any, vec![Any, Any]),
-     ("md5", DeterministicOnly, NotInGuard, Remote, Bitstring, vec![Bitstring]), // actually takes an iolist
+     // ("md5", DeterministicOnly, NotInGuard, Remote, Bitstring, vec![Bitstring]), // actually takes an iolist
      // various incremental md5 functions
      // ("memory", AnyDeterminism, NotInGuard, Remote, List(Box::new(Tuple(vec![memory_type(), Integer]))), vec![]),
      ("memory", AnyDeterminism, NotInGuard, Remote, Integer, vec![memory_type()]),
      // ("memory", AnyDeterminism, NotInGuard, Remote, List(Box::new(Tuple(vec![memory_type(), Integer]))), vec![List(Box::new(memory_type()))]),
      ("min", DeterministicOnly, InGuard, Local, Any, vec![Any, Any]),
      // module_loaded, monitor, monitor_node
-     ("monotonic_time", AnyDeterminism, NotInGuard, Remote, Integer, vec![]),
+     // ("monotonic_time", AnyDeterminism, NotInGuard, Remote, Integer, vec![]),
      // monotonic_time/1, nif_error
      // ("node", DeterministicOnly, InGuard, Local, Atom, vec![]),
      // ("node", DeterministicOnly, InGuard, Local, Atom, vec![Union(vec![Pid, Port, Ref])]),
@@ -274,7 +274,7 @@ static ERLANG_FUNCTIONS: OnceLock<
      // ("ports", AnyDeterminism, NotInGuard, Remote, List(Box::new(Port)), vec![]),
      // ("pre_loaded", AnyDeterminism, NotInGuard, Local, List(Box::new(Atom)), vec![]),
      // process_display, process_flag
-     ("process_info", AnyDeterminism, NotInGuard, Local, List(Box::new(AnyTuple)), vec![Pid]),
+     // ("process_info", AnyDeterminism, NotInGuard, Local, List(Box::new(AnyTuple)), vec![Pid]),
      // process_info/2
      ("processes", AnyDeterminism, NotInGuard, Local, List(Box::new(Pid)), vec![]),
      // purge_module
@@ -293,7 +293,7 @@ static ERLANG_FUNCTIONS: OnceLock<
      ("size", DeterministicOnly, NotInGuard, Local, Integer, vec![AnyTuple]),
      ("size", DeterministicOnly, NotInGuard, Local, Integer, vec![List(Box::new(Any))]),
      // spawn, spawn_link, spawn_monitor, spawn_opt, spawn_request, spawn_request_abandon
-     ("split_binary", DeterministicOnly, NotInGuard, Local, Tuple(vec![Bitstring, Bitstring]), vec![Bitstring, Integer]),
+     // ("split_binary", DeterministicOnly, NotInGuard, Local, Tuple(vec![Bitstring, Bitstring]), vec![Bitstring, Integer]),
      // start_timer, statistics, suspend_process, system_flag, system_info, system_monitor, system_profile
      ("term_to_binary", AnyDeterminism, NotInGuard, Local, Bitstring, vec![Any]),
      // ("term_to_iovec", AnyDeterminism, NotInGuard, Local, List(Box::new(Any)), vec![Any]),
@@ -457,7 +457,7 @@ static ETS_FUNCTIONS: OnceLock<
          // match/1, match/2, match/3, match_delete, match_object, match_spec_compile, match_spec_run
          ("lookup", DeterministicOnly, boolean_type(), vec![ets_table_type(), Any]),
          ("new", DeterministicOnly, ets_table_type(), vec![Atom, new_opts]),
-         ("next", AnyDeterminism, Any, vec![ets_table_type(), Any]),
+        //  ("next", AnyDeterminism, Any, vec![ets_table_type(), Any]),
          // ("prev", AnyDeterminism, Any, vec![ets_table_type(), Any]),
          // ("rename", DeterministicOnly, Atom, vec![ets_table_type(), Atom]),
          // repair_continuation
@@ -471,7 +471,7 @@ static ETS_FUNCTIONS: OnceLock<
          ("take", AnyDeterminism, List(Box::new(AnyTuple)), vec![ets_table_type(), Any]),
          // test_ms, to_dets, update_counter
          ("update_element", DeterministicOnly, boolean_type(), vec![ets_table_type(), Any, Tuple(vec![Integer, Any])]),
-         ("update_element", DeterministicOnly, boolean_type(), vec![ets_table_type(), Any, List(Box::new(Tuple(vec![Integer, Any])))]),
+         // ("update_element", DeterministicOnly, boolean_type(), vec![ets_table_type(), Any, List(Box::new(Tuple(vec![Integer, Any])))]),
          // ("whereis", AnyDeterminism, Pid, vec![ets_table_type()]),
      ])
  }
