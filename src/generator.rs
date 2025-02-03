@@ -7,7 +7,6 @@ use core::cmp::max;
 use std::cmp::Eq;
 use std::fmt;
 
-use num_bigint::BigInt;
 use rand::distributions::DistString;
 use rand::prelude::IteratorRandom;
 use rand::prelude::SliceRandom;
@@ -1573,44 +1572,37 @@ fn get_compatible_records(m: &Module, wanted_type: &TypeApproximation) -> Vec<Re
     }
 }
 
-fn choose_random_integer<RngType: rand::Rng>(rng: &mut RngType) -> BigInt {
-    [
-        BigInt::from(0i32),
-        BigInt::from(1i32),
-        BigInt::from(-1i32),
-        BigInt::from(i32::MIN),
-        BigInt::from(i32::MAX),
-        BigInt::from(i64::MIN),
-        BigInt::from(i64::MAX),
-        BigInt::from(u64::MAX),
-    ]
-    .into_iter()
-    .choose(rng)
-    .unwrap()
+// Patch: Changed BigInt to i32
+fn choose_random_integer<RngType: rand::Rng>(rng: &mut RngType) -> i32 {
+    [0i32, 1i32, -1i32, i32::MIN, i32::MAX]
+        .into_iter()
+        .choose(rng)
+        .unwrap()
 }
 
-fn choose_random_double<RngType: rand::Rng>(rng: &mut RngType) -> f64 {
-    let largest_precise_double_integer = (53f64).exp2();
+// Patch: Changed generated doubles to f32.
+fn choose_random_double<RngType: rand::Rng>(rng: &mut RngType) -> f32 {
+    let largest_precise_double_integer = (24f32).exp2();
     assert!(
-        (largest_precise_double_integer as u64)
-            == ((largest_precise_double_integer + 1.0f64) as u64)
+        (largest_precise_double_integer as u32)
+            == ((largest_precise_double_integer + 1.0f32) as u32)
     );
     assert!(
-        (largest_precise_double_integer as u64)
-            > ((largest_precise_double_integer - 1.0f64) as u64)
+        (largest_precise_double_integer as u32)
+            > ((largest_precise_double_integer - 1.0f32) as u32)
     );
     // We generate none of +Infinity, -Infinity, NaN, because they are banned in Erlang.
     // See http://erlang.org/pipermail/erlang-questions/2012-February/064728.html
     [
-        0.0f64,
-        -0.0f64,
-        1.0f64,
-        -1.0f64,
+        0.0f32,
+        -0.0f32,
+        1.0f32,
+        -1.0f32,
         largest_precise_double_integer,
-        u32::MAX as f64,
-        i32::MAX as f64,
-        f64::MAX,
-        f64::EPSILON,
+        u32::MAX as f32,
+        i32::MAX as f32,
+        f32::MAX,
+        f32::EPSILON,
     ]
     .into_iter()
     .choose(rng)

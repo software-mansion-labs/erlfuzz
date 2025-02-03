@@ -3,9 +3,11 @@
  * This source code is licensed under the Apache 2.0 license found in
  * the LICENSE file in the root directory of this source tree.
  */
+
+//  PATCH: Changed bigint to i32 and f64 to f32.
 use std::fmt;
 
-use num_bigint::BigInt;
+use std::i32;
 use BinaryOperator::*;
 use UnaryOperator::*;
 
@@ -178,7 +180,7 @@ impl fmt::Display for UnaryOperator {
     }
 }
 
-fn write_float(f: &mut fmt::Formatter<'_>, n: f64) -> Result<(), std::fmt::Error> {
+fn write_float(f: &mut fmt::Formatter<'_>, n: f32) -> Result<(), std::fmt::Error> {
     // Force a ".0" at the end if the double is actually an integer
     if n.trunc() != n {
         write!(f, "{}", n)
@@ -192,8 +194,8 @@ pub enum Expr {
     Var(VarNum),
     Nil(),
     Atom(Atom),
-    Integer(BigInt),
-    Float(f64),
+    Integer(i32),
+    Float(f32),
     String(String),
     LocalCall(String, Vec<ExprId>),
     RemoteCall(String, String, Vec<ExprId>),
@@ -735,8 +737,8 @@ impl AstNode for Body {
 pub enum Pattern {
     Nil(),
     Atom(Atom),
-    Integer(BigInt),
-    Float(f64),
+    Integer(i32),
+    Float(f32),
     Underscore(),
     NamedVar(VarNum),
     // p1 = p2
