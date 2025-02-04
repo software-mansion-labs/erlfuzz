@@ -133,7 +133,7 @@ static ERLANG_FUNCTIONS: OnceLock<
      // ]);
  
      ERLANG_FUNCTIONS.get_or_init(|| vec![
-     ("abs", DeterministicOnly, InGuard, Local, Float, vec![Float]),
+    //  ("abs", DeterministicOnly, InGuard, Local, Float, vec![Float]),
      ("abs", DeterministicOnly, InGuard, Local, Integer, vec![Integer]),
      // ("adler32", DeterministicOnly, NotInGuard, Remote, Integer, vec![List(Box::new(Any))]), // actually iodata
      // ("adler32", DeterministicOnly, NotInGuard, Remote, Integer, vec![Integer, List(Box::new(Any))]), // List(Box::new(Any)) is actually iodata
