@@ -1005,7 +1005,8 @@ impl fmt::Display for Module {
             } else {
                 ""
             },
-            if config.disable_maybe {
+            // if config.disable_maybe {
+            if false {
                 "--disable-maybe "
             } else {
                 ""
@@ -1032,7 +1033,8 @@ impl fmt::Display for Module {
             f,
             "% then complete with `--tmp-directory <OUT> --minimized-directory <MINIMIZED> --command <COMMAND>` where command is the script that you used (e.g. ./verify_erlc_opts.sh)\n"
         )?;
-        if !config.disable_maybe {
+        // if !config.disable_maybe {
+        if false {
             write!(f, "-feature(maybe_expr, enable).\n")?;
         }
         write!(f, "-module({}).\n", self.module_name)?;
