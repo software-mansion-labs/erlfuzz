@@ -41,7 +41,8 @@ impl Context {
         Context {
             allowed_size: config.max_size,
             max_recursion_depth: config.max_recursion_depth,
-            maybe_is_allowed: !config.disable_maybe,
+            // maybe_is_allowed: !config.disable_maybe,
+            maybe_is_allowed: false,
             map_comprehensions_are_allowed: !config.disable_map_comprehensions,
             deterministic: config.deterministic,
             ..Context::new()

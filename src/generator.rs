@@ -177,6 +177,7 @@ fn gen_start_function<RngType: rand::Rng>(
         let call = module.add_expr(Expr::LocalCall(name, args), Any);
         exprs.push(module.add_expr(Expr::Catch(call), Any));
     }
+    exprs.push(module.add_expr(Expr::Atom("ok".to_string()), Atom));
     let body = module.add_body(Body { exprs });
     let name = "start".to_owned();
     make_trivial_function_from_body(module, body, name)
